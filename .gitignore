@@ -44,7 +44,6 @@ env.bak/
 venv.bak/
 
 
-db
 controllers
 public
 seeds
