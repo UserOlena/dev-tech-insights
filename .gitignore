@@ -49,4 +49,5 @@ public
 seeds
 utils
 views
-models
+Blog.js
+comment.js
