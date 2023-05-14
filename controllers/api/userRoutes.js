@@ -2,7 +2,38 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 
+// set up a route for users to log in.
+router.post('/login', async (req, res) => {
+    try {
+        // verify the existence of the user with the provided email in the database.
+        const validateUser = await User.findOne({
+            where: {
+                email: req.body.email.toLowerCase().trim(),
+            }
+        });
 
+        if (!validateUser) {
+            return res.status(400).json({ message: 'Incorrect email or password, please try again' });
+        }
+        
+        // verify that the hashed password stored in the database matches the password provided by the user.
+        const validatePassword = bcrypt.compareSync(req.body.password, validateUser.password);
+        
+        if (!validatePassword) {
+            return res.status(400).json({ message: 'Incorrect email or password, please try again' });
+        }
+        
+        
+        return res.status(200).json({ message: 'You have been successfully logged in!' })
+        
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
+router.post('/logout', (req, res) => {
+    res.json('logout');
+});
 
 router.post('/signup', async (req, res) => {
     try {
