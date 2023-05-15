@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Incorrect email or password, please try again' });
         }
         
-        
+        console.log(req.session)     
         return res.status(200).json({ message: 'You have been successfully logged in!' })
         
     } catch (error) {
